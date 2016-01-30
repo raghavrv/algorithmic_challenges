@@ -6,22 +6,24 @@
 using namespace std;
 
 int main() {
-    int tries, n, total_candies, min_candies, temp;
+    int tries, n, temp;
+    long int total_candies;
 
     scanf("%d", &tries);
 
     while (tries--) {
-        scanf("%d", &n);
-        scanf("%d", &total_candies);
+        cin>>n;
+        cin>>total_candies;
+
         while (n--) {
-            scanf("%d", &temp);
-            min_candies += temp;
+            cin>>temp;
+            total_candies -= temp;
         }
 
-        if (total_candies >= min_candies)
-            printf("YES\n");
+        if (total_candies >= 0)
+            cout<<"Yes"<<endl;
         else
-            printf("YES\n");
+            cout<<"No"<<endl;
     }
 return 0;
 }
