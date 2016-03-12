@@ -1,6 +1,5 @@
 #include<iostream>
 #include<math.h>
-#include<vector>
 
 #define MAX_SIZE 1000000001
 #define MAX_RANGE 100001
@@ -8,12 +7,8 @@
 
 using namespace std;
 
-void build_sieve(vector<bool> *is_prime_ref,
+void build_sieve(bool *is_prime,
                  unsigned long int upper_limit) {
-
-    // This will make my life a bit easier
-    // Dereference the sieve
-    vector<bool> &is_prime = *is_prime_ref;
 
     // Base primes
     is_prime[2] = true;
@@ -147,12 +142,9 @@ int main() {
     // Lets use a common factor_sieve (for numbers upto SQRT_MAX_SIZE) and
     // cache it for all the n_testcases
 
-    // This will force it to store the data on the heap
-    vector<bool> *main_sieve_ref = new vector<bool>(MAX_RANGE);
-    vector<bool> *factor_sieve_ref = new vector<bool>(SQRT_MAX_SIZE);
-
-    vector<bool> &main_sieve = *main_sieve_ref;
-    vector<bool> &factor_sieve = *factor_sieve_ref;
+    // Force it to store on heap
+    bool *main_sieve = new bool[MAX_RANGE];
+    bool *factor_sieve = new bool[SQRT_MAX_SIZE];
 
     unsigned long int lower_limit, upper_limit;
 
@@ -161,10 +153,8 @@ int main() {
 
     // NOTE we are using atkins to build the factor sieve alone
     
-    // First clear the factor_sieve
-    factor_sieve.assign(factor_sieve.size(), false);
     // Build it using Atkin's sieving
-    build_sieve(factor_sieve_ref, SQRT_MAX_SIZE - 1);
+    build_sieve(factor_sieve, SQRT_MAX_SIZE - 1);
 
     /*
     for (int i = 0; i < 100; i++)
@@ -178,7 +168,7 @@ int main() {
         // Build the main_sieve for the new limits
         
         // Clear the previous main_sieve
-        main_sieve.assign(main_sieve.size(), true);
+        std::fill(main_sieve, main_sieve + MAX_RANGE + 1, true);
 
         // Mark all the even numbers as composite
         for (unsigned long int even_no = ((lower_limit <= 2) ? 4 : lower_limit + (lower_limit % 2));
@@ -212,12 +202,19 @@ int main() {
             // if lower_limit = 52, choose {57, 63...} (as 54 is even)
             
             // Choose the least multiple of the prime_factor included in the range
-            least_odd_multiple = lower_limit + prime_factor - (lower_limit % prime_factor);
+            // If the lower limit is an odd multiple of prime_factor choose it
+            // as the least_odd_multiple, else choose the next odd multiple of
+            // the current prime_factor
+            least_odd_multiple = ((lower_limit % prime_factor == 0) ?
+                                  lower_limit :
+                                  lower_limit + prime_factor - (lower_limit % prime_factor));
             
-            // The prime_factor should not be marked composite
+            // If the lower limit itself is a prime_factor, it should not be marked composite
+            // Don't add prime_factor as it will make it even, (we've eleminated evens)
             least_odd_multiple += (least_odd_multiple == prime_factor) ? next_odd_multiple_increment : 0;
 
             // If we've chosen an even multiple, choose the next one which will be odd
+            // (as we have marked all even numbers as composite)
             least_odd_multiple += (least_odd_multiple % 2 == 0) ? prime_factor : 0;
 
             for (unsigned long int odd_multiple = least_odd_multiple;
@@ -228,9 +225,12 @@ int main() {
         }
 
         // Print the primes in the range
-        for (unsigned long int no=lower_limit; no <= upper_limit; no++)
+        for (unsigned long int no=lower_limit; no <= upper_limit; no++) {
             if (main_sieve[no-lower_limit])
-                cout<<no<<endl;
+                cout<<no<<"\n";
+        }
+
+        cout<<"\n";
     }
     return 0;
 }
