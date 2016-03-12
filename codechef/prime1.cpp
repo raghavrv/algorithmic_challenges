@@ -181,7 +181,7 @@ int main() {
         main_sieve.assign(main_sieve.size(), true);
 
         // Mark all the even numbers as composite
-        for (unsigned long int even_no = (lower_limit == 0 ? 4 : lower_limit + (lower_limit % 2));
+        for (unsigned long int even_no = ((lower_limit <= 2) ? 4 : lower_limit + (lower_limit % 2));
                 even_no <= upper_limit; even_no += 2)
             main_sieve[even_no-lower_limit] = false;
 
