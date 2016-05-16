@@ -2,6 +2,7 @@
 
 ```python
 import os
+import time
 
 from IPython.display import Markdown, HTML, display_markdown
 from glob import glob
@@ -12,21 +13,26 @@ all_cpp_files = glob("/media/rvraghav93/code/projects/competitive_programming/co
 all_cpp_files_sorted_by_date = sorted(all_cpp_files,
                                       key=lambda fpath: os.path.getctime(fpath), reverse=True)
 
-for i, problem in enumerate(all_cpp_files_sorted_by_date, 1):  
-    with open(problem) as f:
+for i, fpath in enumerate(all_cpp_files_sorted_by_date, 1):  
+    with open(fpath) as f:
         code = f.read().splitlines()
         url = code[0]
         code_md = cpp_markdown_template % "\n".join(code[1:])
 
     prob = url.split('/')[-1]
     url = url.strip('/ ')
-    display_markdown(Markdown("### %d. %s</br>\n[%s](%s)" % (i, prob, url, url)))
+    display_markdown(Markdown("### %d. %s</br>\n[%s](%s)\n\n(%s)"
+                              % (i, prob, url, url,
+                                 time.strftime("%d-%b-%Y",
+                                               time.localtime(os.path.getctime(fpath))))))
     display_markdown(Markdown(code_md))
 ```
 
 
 ### 1. PRIME1</br>
 [https://www.codechef.com/problems/PRIME1](https://www.codechef.com/problems/PRIME1)
+
+(16-May-2016)
 
 
 
@@ -281,6 +287,8 @@ int main() {
 ### 2. LECANDY</br>
 [https://www.codechef.com/problems/LECANDY](https://www.codechef.com/problems/LECANDY)
 
+(31-Jan-2016)
+
 
 
 ```cpp
@@ -319,6 +327,8 @@ return 0;
 
 ### 3. PRPALIN</br>
 [https://www.codechef.com/problems/PRPALIN](https://www.codechef.com/problems/PRPALIN)
+
+(30-Jan-2016)
 
 
 
@@ -378,6 +388,8 @@ int main() {
 ### 4. HOLES</br>
 [https://www.codechef.com/problems/HOLES](https://www.codechef.com/problems/HOLES)
 
+(30-Jan-2016)
+
 
 
 ```cpp
@@ -418,6 +430,8 @@ int main()
 
 ### 5. #include<iostream></br>
 [#include<iostream>](#include<iostream>)
+
+(30-Jan-2016)
 
 
 
@@ -498,6 +512,8 @@ int main()
 ### 6. INTEST</br>
 [https://www.codechef.com/problems/INTEST](https://www.codechef.com/problems/INTEST)
 
+(30-Jan-2016)
+
 
 
 ```cpp
@@ -524,6 +540,8 @@ int main() {
 
 ### 7. MAXCOUNT </br>
 [https://www.codechef.com/problems/MAXCOUNT](https://www.codechef.com/problems/MAXCOUNT)
+
+(30-Jan-2016)
 
 
 
@@ -591,6 +609,8 @@ int main() {
 ### 8. CIELAB</br>
 [https://www.codechef.com/problems/CIELAB](https://www.codechef.com/problems/CIELAB)
 
+(30-Jan-2016)
+
 
 
 ```cpp
@@ -623,6 +643,8 @@ int main() {
 
 ### 9. COOLING</br>
 [https://www.codechef.com/problems/COOLING](https://www.codechef.com/problems/COOLING)
+
+(30-Jan-2016)
 
 
 
@@ -726,6 +748,8 @@ int main() {
 ### 10. NUMGAME</br>
 [https://www.codechef.com/problems/NUMGAME](https://www.codechef.com/problems/NUMGAME)
 
+(30-Jan-2016)
+
 
 
 ```cpp
@@ -755,6 +779,8 @@ int main() {
 ### 11. DOUBLE</br>
 [https://www.codechef.com/problems/DOUBLE](https://www.codechef.com/problems/DOUBLE)
 
+(30-Jan-2016)
+
 
 
 ```cpp
@@ -782,6 +808,8 @@ return 0;
 
 ### 12. LCPESY</br>
 [https://www.codechef.com/problems/LCPESY](https://www.codechef.com/problems/LCPESY)
+
+(30-Jan-2016)
 
 
 
