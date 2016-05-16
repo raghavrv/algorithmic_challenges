@@ -12,17 +12,21 @@ all_cpp_files = glob("/media/rvraghav93/code/projects/competitive_programming/co
 all_cpp_files_sorted_by_date = sorted(all_cpp_files,
                                       key=lambda fpath: os.path.getctime(fpath), reverse=True)
 
-for i, problem in enumerate(all_cpp_files_sorted_by_date):  
+for i, problem in enumerate(all_cpp_files_sorted_by_date, 1):  
     with open(problem) as f:
         code = f.read().splitlines()
         url = code[0]
         code_md = cpp_markdown_template % "\n".join(code[1:])
 
-    print i+1, url.strip('/ ')
+    prob = url.split('/')[-1]
+    url = url.strip('/ ')
+    display_markdown(Markdown("### %d. %s</br>\n[%s](%s)" % (i, prob, url, url)))
     display_markdown(Markdown(code_md))
 ```
 
-    1 https://www.codechef.com/problems/PRIME1
+
+### 1. PRIME1</br>
+[https://www.codechef.com/problems/PRIME1](https://www.codechef.com/problems/PRIME1)
 
 
 
@@ -273,7 +277,9 @@ int main() {
 <hr>
 
 
-    2 https://www.codechef.com/problems/LECANDY
+
+### 2. LECANDY</br>
+[https://www.codechef.com/problems/LECANDY](https://www.codechef.com/problems/LECANDY)
 
 
 
@@ -310,7 +316,9 @@ return 0;
 <hr>
 
 
-    3 https://www.codechef.com/problems/PRPALIN
+
+### 3. PRPALIN</br>
+[https://www.codechef.com/problems/PRPALIN](https://www.codechef.com/problems/PRPALIN)
 
 
 
@@ -366,7 +374,9 @@ int main() {
 <hr>
 
 
-    4 https://www.codechef.com/problems/HOLES
+
+### 4. HOLES</br>
+[https://www.codechef.com/problems/HOLES](https://www.codechef.com/problems/HOLES)
 
 
 
@@ -405,7 +415,9 @@ int main()
 <hr>
 
 
-    5 #include<iostream>
+
+### 5. #include<iostream></br>
+[#include<iostream>](#include<iostream>)
 
 
 
@@ -482,7 +494,9 @@ int main()
 <hr>
 
 
-    6 https://www.codechef.com/problems/INTEST
+
+### 6. INTEST</br>
+[https://www.codechef.com/problems/INTEST](https://www.codechef.com/problems/INTEST)
 
 
 
@@ -507,7 +521,9 @@ int main() {
 <hr>
 
 
-    7 https://www.codechef.com/problems/MAXCOUNT
+
+### 7. MAXCOUNT </br>
+[https://www.codechef.com/problems/MAXCOUNT](https://www.codechef.com/problems/MAXCOUNT)
 
 
 
@@ -571,7 +587,9 @@ int main() {
 <hr>
 
 
-    8 https://www.codechef.com/problems/CIELAB
+
+### 8. CIELAB</br>
+[https://www.codechef.com/problems/CIELAB](https://www.codechef.com/problems/CIELAB)
 
 
 
@@ -602,7 +620,9 @@ int main() {
 <hr>
 
 
-    9 https://www.codechef.com/problems/COOLING
+
+### 9. COOLING</br>
+[https://www.codechef.com/problems/COOLING](https://www.codechef.com/problems/COOLING)
 
 
 
@@ -702,7 +722,9 @@ int main() {
 <hr>
 
 
-    10 https://www.codechef.com/problems/NUMGAME
+
+### 10. NUMGAME</br>
+[https://www.codechef.com/problems/NUMGAME](https://www.codechef.com/problems/NUMGAME)
 
 
 
@@ -729,7 +751,9 @@ int main() {
 <hr>
 
 
-    11 https://www.codechef.com/problems/DOUBLE
+
+### 11. DOUBLE</br>
+[https://www.codechef.com/problems/DOUBLE](https://www.codechef.com/problems/DOUBLE)
 
 
 
@@ -755,7 +779,9 @@ return 0;
 <hr>
 
 
-    12 https://www.codechef.com/problems/LCPESY
+
+### 12. LCPESY</br>
+[https://www.codechef.com/problems/LCPESY](https://www.codechef.com/problems/LCPESY)
 
 
 
@@ -805,3 +831,8 @@ int main() {
 ```
 <hr>
 
+
+
+```python
+
+```
