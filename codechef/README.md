@@ -1,13 +1,18 @@
 
 
 ```python
+import os
+
 from IPython.display import Markdown, HTML, display_markdown
 from glob import glob
 
 cpp_markdown_template = """```cpp\n%s\n```\n<hr>"""
 
-for i, problem in enumerate(
-        glob("/media/rvraghav93/code/projects/competitive_programming/codechef/*.cpp")):  
+all_cpp_files = glob("/media/rvraghav93/code/projects/competitive_programming/codechef/*.cpp")
+all_cpp_files_sorted_by_date = sorted(all_cpp_files,
+                                      key=lambda fpath: os.path.getctime(fpath), reverse=True)
+
+for i, problem in enumerate(all_cpp_files_sorted_by_date):  
     with open(problem) as f:
         code = f.read().splitlines()
         url = code[0]
@@ -17,158 +22,18 @@ for i, problem in enumerate(
     display_markdown(Markdown(code_md))
 ```
 
-    1 https://www.codechef.com/problems/PRPALIN
+    1 https://www.codechef.com/problems/PRIME1
 
 
 
 ```cpp
-// Find the first prime palindromic number after the given number
-#include <stdio.h>
-#include <math.h>
+// Find all primes within the range of two very large numbers
 
-bool is_palindrome(long int &n) {
-    long int a = n;
-    long int b = 0;
-
-    // We don't know the n_digits of n, hence we can't check the r/l half alone
-    while (a > 0) {
-        b *= 10;
-        b += a % 10;
-        a /= 10;
-    }
-
-    return b == n;
-}
-
-bool is_prime(long int &n) {
-    long int max_factor = sqrt(n);
-
-    if (!(n % 3) or !(n % 5) or !(n % 7))
-        return false;
-
-    for (long int f = 11; f < max_factor; f += 2)
-        if (!(n % f))
-            return false;
-
-    return true;
-}
-
-int main() {
-    // Global array to store all the prime numbers
-    long int n;
-
-    scanf("%li", &n);
-
-    // If even, advance by one so we can skip all even numbers
-    if(n % 2 == 0)
-        n += 1;
-
-    for(;; n+=2)
-        if (is_palindrome(n) and is_prime(n)) {
-            printf("%li\n", n);
-            break;
-        }
-}
-```
-<hr>
-
-
-    2 https://www.codechef.com/problems/NUMGAME
-
-
-
-```cpp
-// Predict the winner in a number game.
+// Uses Atkin seiving. NOTE that for all practical purposes, properly
+// implemented eratosthenes' seiving is by itself as fast as Atkin's
+// (if not faster). Atkin's has been implemented here for pedagogical purpose.
 
 #include<iostream>
-
-int main() {
-    int tries, n;
-
-    scanf("%d", &tries);
-
-    while(tries--) {
-        scanf("%d", &n);
-        if(n % 2)
-            printf("BOB\n");
-        else
-            // If the number is even, the 1st player wins the game
-            printf("ALICE\n");
-    }
-}
-```
-<hr>
-
-
-    3 https://www.codechef.com/problems/MAXCOUNT
-
-
-
-```cpp
-// Find the element that occurs the maximum no of times
-// Choose smallest to break ties
-
-#include<iostream>
-#define MAXSIZE 100
-
-using namespace std;
-
-
-int main() {
-    int array[MAXSIZE];
-    
-    // (Can use hashmap but the MAXSIZE is just 100, it doesn't really matter)
-    int count[MAXSIZE] = {1}; // Initialize to 1
-    int n_tries, n, elt;
-    int max_element, max_count;
-    scanf("%d", &n_tries);
-    
-    while(n_tries--) {
-        scanf("%d", &n);
-        
-        for(int i = 0; i < n; i++) {
-            scanf("%d", &elt);
-            array[i] = elt;
-            count[i] = 1;
-            // N^2 complexity? but meh MAXSIZE is 100
-            for(int j = 0; j < i; j++) {
-                if(elt == array[j]) {
-                    // Note that the current element has occured before
-                    count[i] = -1;
-                    // Increment the previous' count
-                    count[j]++;
-                    break;
-                }
-            }
-        }
-        
-        // Reset the max
-        max_element = array[0];
-        max_count = count[0];
-        
-        for(int i = 0; i < n; i++) {
-            if ((count[i] > max_count) || ((count[i] == max_count) && (array[i] < max_element))) {
-                max_count = count[i];
-                max_element = array[i];
-            }
-        }
-            
-        printf("%d %d\n", max_element, max_count);
-    }
-    return 0;
-}
-
-
-
-```
-<hr>
-
-
-    4 #include<iostream>
-
-
-
-```cpp
 #include<math.h>
 
 #define MAX_SIZE 1000000001
@@ -408,7 +273,336 @@ int main() {
 <hr>
 
 
-    5 https://www.codechef.com/problems/COOLING
+    2 https://www.codechef.com/problems/LECANDY
+
+
+
+```cpp
+// See if we can make all elephants happy
+
+#include<iostream>
+
+using namespace std;
+
+int main() {
+    int tries, n, temp;
+    long int total_candies;
+
+    scanf("%d", &tries);
+
+    while (tries--) {
+        cin>>n;
+        cin>>total_candies;
+
+        while (n--) {
+            cin>>temp;
+            total_candies -= temp;
+        }
+
+        if (total_candies >= 0)
+            cout<<"Yes"<<endl;
+        else
+            cout<<"No"<<endl;
+    }
+return 0;
+}
+```
+<hr>
+
+
+    3 https://www.codechef.com/problems/PRPALIN
+
+
+
+```cpp
+// Find the first prime palindromic number after the given number
+#include <stdio.h>
+#include <math.h>
+
+bool is_palindrome(long int &n) {
+    long int a = n;
+    long int b = 0;
+
+    // We don't know the n_digits of n, hence we can't check the r/l half alone
+    while (a > 0) {
+        b *= 10;
+        b += a % 10;
+        a /= 10;
+    }
+
+    return b == n;
+}
+
+bool is_prime(long int &n) {
+    long int max_factor = sqrt(n);
+
+    if (!(n % 3) or !(n % 5) or !(n % 7))
+        return false;
+
+    for (long int f = 11; f < max_factor; f += 2)
+        if (!(n % f))
+            return false;
+
+    return true;
+}
+
+int main() {
+    // Global array to store all the prime numbers
+    long int n;
+
+    scanf("%li", &n);
+
+    // If even, advance by one so we can skip all even numbers
+    if(n % 2 == 0)
+        n += 1;
+
+    for(;; n+=2)
+        if (is_palindrome(n) and is_prime(n)) {
+            printf("%li\n", n);
+            break;
+        }
+}
+```
+<hr>
+
+
+    4 https://www.codechef.com/problems/HOLES
+
+
+
+```cpp
+// Compute the number of holes (fully bounded regions) of all the
+// characters in the string
+
+#include<iostream>
+#include<stdio.h>
+#define g getchar_unlocked
+
+using namespace std;
+int main()
+{
+	char s[] = {'A','D','O','P','Q','R'};
+	char c;
+	int sum,n;
+	
+	cin>>n;
+	while(n--)
+		{	c=g();
+			sum = 0;
+			while(c!='\n')
+				{  	if (c == 'b')
+						sum += 2;
+					else
+						for (int i = 0;i<=5;i++)
+							if (c==s[i])
+								sum += 1;
+					c=g();
+				}
+			cout<<sum<<endl;
+		}
+}
+```
+<hr>
+
+
+    5 #include<iostream>
+
+
+
+```cpp
+#include<stdio.h>
+using namespace std;
+
+int getinum()
+{
+	
+	char c;
+	int res = 0;
+	c = getchar_unlocked();
+	while((c!='\n')&&(c!=32))
+		{
+			res = res*10 + c - 48;
+			c = getchar_unlocked();
+		}
+//	printf("%d",res);
+	return res;
+
+}
+
+long getlnum()
+{
+	char c;
+	long res = 0;
+	c = getchar_unlocked();
+	while((c!='\n')&&(c!=32))
+		{
+			res = res*10 +c -48;
+			c = getchar_unlocked();
+		}
+//	printf("%li   ",res);
+	return res;
+}
+
+int main()
+{
+ 
+	int size = getinum();
+	long val;
+	long a[50];
+	int i = 0;
+	int count = 0;
+	while(i<size)
+	{	a[i++] = getlnum();
+	}
+	int nq = getinum();
+	while(nq--)
+	{
+		long q = getlnum();
+		i = 0;
+		count = 0;
+		while(i<size)
+		{	
+			if (a[i++]<q)
+				count = 0;
+			else if (a[i++]>q)
+				count++;
+			else
+				{
+					while(a[i++]>=q)
+						count++;
+					break;
+				}
+		}
+		cout<<"o"<<++count<<endl;
+	}
+
+
+}
+```
+<hr>
+
+
+    6 https://www.codechef.com/problems/INTEST
+
+
+
+```cpp
+// Input/Output enormous input values
+
+#include<stdio.h>
+
+int main() {	
+	unsigned long long n,k,a;
+	unsigned long long b=0;
+	scanf("%llu %llu",&n,&k);
+	while(n--)
+	{	scanf("%llu",&a);
+		if(!(a%k))
+			b++;
+	}
+	printf("%llu",b);
+	return 0;
+}
+```
+<hr>
+
+
+    7 https://www.codechef.com/problems/MAXCOUNT
+
+
+
+```cpp
+// Find the element that occurs the maximum no of times
+// Choose smallest to break ties
+
+#include<iostream>
+#define MAXSIZE 100
+
+using namespace std;
+
+
+int main() {
+    int array[MAXSIZE];
+    
+    // (Can use hashmap but the MAXSIZE is just 100, it doesn't really matter)
+    int count[MAXSIZE] = {1}; // Initialize to 1
+    int n_tries, n, elt;
+    int max_element, max_count;
+    scanf("%d", &n_tries);
+    
+    while(n_tries--) {
+        scanf("%d", &n);
+        
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &elt);
+            array[i] = elt;
+            count[i] = 1;
+            // N^2 complexity? but meh MAXSIZE is 100
+            for(int j = 0; j < i; j++) {
+                if(elt == array[j]) {
+                    // Note that the current element has occured before
+                    count[i] = -1;
+                    // Increment the previous' count
+                    count[j]++;
+                    break;
+                }
+            }
+        }
+        
+        // Reset the max
+        max_element = array[0];
+        max_count = count[0];
+        
+        for(int i = 0; i < n; i++) {
+            if ((count[i] > max_count) || ((count[i] == max_count) && (array[i] < max_element))) {
+                max_count = count[i];
+                max_element = array[i];
+            }
+        }
+            
+        printf("%d %d\n", max_element, max_count);
+    }
+    return 0;
+}
+
+
+
+```
+<hr>
+
+
+    8 https://www.codechef.com/problems/CIELAB
+
+
+
+```cpp
+// Print a positive difference value with no leading zeros, but exactly one
+// incorrect digit
+
+#include<iostream>
+
+using namespace std;
+
+int main() {
+    int b, diff;
+
+    scanf("%d %d", &diff, &b);
+    diff -= b;
+
+    if(diff%10 == 9)
+        // 999 + 1 --> 1000 => take 999 - 1
+        // 989 + 1 --> 990 (2 dig changed) => take 999 - 1
+        printf("%d", diff-1);
+    else
+        // 100 - 1 --> 99 => take 100 + 1
+        printf("%d", diff+1);
+    return 0;
+}
+```
+<hr>
+
+
+    9 https://www.codechef.com/problems/COOLING
 
 
 
@@ -508,7 +702,34 @@ int main() {
 <hr>
 
 
-    6 https://www.codechef.com/problems/DOUBLE
+    10 https://www.codechef.com/problems/NUMGAME
+
+
+
+```cpp
+// Predict the winner in a number game.
+
+#include<iostream>
+
+int main() {
+    int tries, n;
+
+    scanf("%d", &tries);
+
+    while(tries--) {
+        scanf("%d", &n);
+        if(n % 2)
+            printf("BOB\n");
+        else
+            // If the number is even, the 1st player wins the game
+            printf("ALICE\n");
+    }
+}
+```
+<hr>
+
+
+    11 https://www.codechef.com/problems/DOUBLE
 
 
 
@@ -534,46 +755,7 @@ return 0;
 <hr>
 
 
-    7 https://www.codechef.com/problems/HOLES
-
-
-
-```cpp
-// Compute the number of holes (fully bounded regions) of all the
-// characters in the string
-
-#include<iostream>
-#include<stdio.h>
-#define g getchar_unlocked
-
-using namespace std;
-int main()
-{
-	char s[] = {'A','D','O','P','Q','R'};
-	char c;
-	int sum,n;
-	
-	cin>>n;
-	while(n--)
-		{	c=g();
-			sum = 0;
-			while(c!='\n')
-				{  	if (c == 'b')
-						sum += 2;
-					else
-						for (int i = 0;i<=5;i++)
-							if (c==s[i])
-								sum += 1;
-					c=g();
-				}
-			cout<<sum<<endl;
-		}
-}
-```
-<hr>
-
-
-    8 https://www.codechef.com/problems/LCPESY
+    12 https://www.codechef.com/problems/LCPESY
 
 
 
@@ -623,178 +805,3 @@ int main() {
 ```
 <hr>
 
-
-    9 #include<iostream>
-
-
-
-```cpp
-#include<stdio.h>
-using namespace std;
-
-int getinum()
-{
-	
-	char c;
-	int res = 0;
-	c = getchar_unlocked();
-	while((c!='\n')&&(c!=32))
-		{
-			res = res*10 + c - 48;
-			c = getchar_unlocked();
-		}
-//	printf("%d",res);
-	return res;
-
-}
-
-long getlnum()
-{
-	char c;
-	long res = 0;
-	c = getchar_unlocked();
-	while((c!='\n')&&(c!=32))
-		{
-			res = res*10 +c -48;
-			c = getchar_unlocked();
-		}
-//	printf("%li   ",res);
-	return res;
-}
-
-int main()
-{
- 
-	int size = getinum();
-	long val;
-	long a[50];
-	int i = 0;
-	int count = 0;
-	while(i<size)
-	{	a[i++] = getlnum();
-	}
-	int nq = getinum();
-	while(nq--)
-	{
-		long q = getlnum();
-		i = 0;
-		count = 0;
-		while(i<size)
-		{	
-			if (a[i++]<q)
-				count = 0;
-			else if (a[i++]>q)
-				count++;
-			else
-				{
-					while(a[i++]>=q)
-						count++;
-					break;
-				}
-		}
-		cout<<"o"<<++count<<endl;
-	}
-
-
-}
-```
-<hr>
-
-
-    10 https://www.codechef.com/problems/LECANDY
-
-
-
-```cpp
-// See if we can make all elephants happy
-
-#include<iostream>
-
-using namespace std;
-
-int main() {
-    int tries, n, temp;
-    long int total_candies;
-
-    scanf("%d", &tries);
-
-    while (tries--) {
-        cin>>n;
-        cin>>total_candies;
-
-        while (n--) {
-            cin>>temp;
-            total_candies -= temp;
-        }
-
-        if (total_candies >= 0)
-            cout<<"Yes"<<endl;
-        else
-            cout<<"No"<<endl;
-    }
-return 0;
-}
-```
-<hr>
-
-
-    11 https://www.codechef.com/problems/INTEST
-
-
-
-```cpp
-// Input/Output enormous input values
-
-#include<stdio.h>
-
-int main() {	
-	unsigned long long n,k,a;
-	unsigned long long b=0;
-	scanf("%llu %llu",&n,&k);
-	while(n--)
-	{	scanf("%llu",&a);
-		if(!(a%k))
-			b++;
-	}
-	printf("%llu",b);
-	return 0;
-}
-```
-<hr>
-
-
-    12 https://www.codechef.com/problems/CIELAB
-
-
-
-```cpp
-// Print a positive difference value with no leading zeros, but exactly one
-// incorrect digit
-
-#include<iostream>
-
-using namespace std;
-
-int main() {
-    int b, diff;
-
-    scanf("%d %d", &diff, &b);
-    diff -= b;
-
-    if(diff%10 == 9)
-        // 999 + 1 --> 1000 => take 999 - 1
-        // 989 + 1 --> 990 (2 dig changed) => take 999 - 1
-        printf("%d", diff-1);
-    else
-        // 100 - 1 --> 99 => take 100 + 1
-        printf("%d", diff+1);
-    return 0;
-}
-```
-<hr>
-
-
-
-```python
-
-```
