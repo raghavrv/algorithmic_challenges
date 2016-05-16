@@ -1,3 +1,4 @@
 *.jnlp
 a.out
 *.swp
+*ipynb_checkpoints*
