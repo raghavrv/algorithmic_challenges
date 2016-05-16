@@ -1,3 +1,10 @@
+// https://www.codechef.com/problems/PRIME1
+// Find all primes within the range of two very large numbers
+
+// Uses Atkin seiving. NOTE that for all practical purposes, properly
+// implemented eratosthenes' seiving is by itself as fast as Atkin's
+// (if not faster). Atkin's has been implemented here for pedagogical purpose.
+
 #include<iostream>
 #include<math.h>
 
