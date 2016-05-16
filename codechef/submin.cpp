@@ -1,3 +1,6 @@
+// https://www.codechef.com/problems/SUBMIN
+// Print the number of subarrays having the given minimum.
+
 #include<iostream>
 #include<stdio.h>
 using namespace std;

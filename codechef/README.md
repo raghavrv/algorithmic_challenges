@@ -24,7 +24,8 @@ for i, fpath in enumerate(all_cpp_files_sorted_by_date, 1):
     display_markdown(Markdown("### %d. %s</br>\n[%s](%s)\n\n(%s)"
                               % (i, prob, url, url,
                                  time.strftime("%d-%b-%Y",
-                                               time.localtime(os.path.getctime(fpath))))))
+                                               time.localtime(os.stat(fpath).st_mtime)))))
+    os.utime
     display_markdown(Markdown(code_md))
 ```
 
@@ -284,158 +285,17 @@ int main() {
 
 
 
-### 2. LECANDY</br>
-[https://www.codechef.com/problems/LECANDY](https://www.codechef.com/problems/LECANDY)
+### 2. SUBMIN</br>
+[https://www.codechef.com/problems/SUBMIN](https://www.codechef.com/problems/SUBMIN)
 
-(31-Jan-2016)
+(16-May-2016)
 
 
 
 ```cpp
-// See if we can make all elephants happy
+// Print the number of subarrays having the given minimum.
 
 #include<iostream>
-
-using namespace std;
-
-int main() {
-    int tries, n, temp;
-    long int total_candies;
-
-    scanf("%d", &tries);
-
-    while (tries--) {
-        cin>>n;
-        cin>>total_candies;
-
-        while (n--) {
-            cin>>temp;
-            total_candies -= temp;
-        }
-
-        if (total_candies >= 0)
-            cout<<"Yes"<<endl;
-        else
-            cout<<"No"<<endl;
-    }
-return 0;
-}
-```
-<hr>
-
-
-
-### 3. PRPALIN</br>
-[https://www.codechef.com/problems/PRPALIN](https://www.codechef.com/problems/PRPALIN)
-
-(30-Jan-2016)
-
-
-
-```cpp
-// Find the first prime palindromic number after the given number
-#include <stdio.h>
-#include <math.h>
-
-bool is_palindrome(long int &n) {
-    long int a = n;
-    long int b = 0;
-
-    // We don't know the n_digits of n, hence we can't check the r/l half alone
-    while (a > 0) {
-        b *= 10;
-        b += a % 10;
-        a /= 10;
-    }
-
-    return b == n;
-}
-
-bool is_prime(long int &n) {
-    long int max_factor = sqrt(n);
-
-    if (!(n % 3) or !(n % 5) or !(n % 7))
-        return false;
-
-    for (long int f = 11; f < max_factor; f += 2)
-        if (!(n % f))
-            return false;
-
-    return true;
-}
-
-int main() {
-    // Global array to store all the prime numbers
-    long int n;
-
-    scanf("%li", &n);
-
-    // If even, advance by one so we can skip all even numbers
-    if(n % 2 == 0)
-        n += 1;
-
-    for(;; n+=2)
-        if (is_palindrome(n) and is_prime(n)) {
-            printf("%li\n", n);
-            break;
-        }
-}
-```
-<hr>
-
-
-
-### 4. HOLES</br>
-[https://www.codechef.com/problems/HOLES](https://www.codechef.com/problems/HOLES)
-
-(30-Jan-2016)
-
-
-
-```cpp
-// Compute the number of holes (fully bounded regions) of all the
-// characters in the string
-
-#include<iostream>
-#include<stdio.h>
-#define g getchar_unlocked
-
-using namespace std;
-int main()
-{
-	char s[] = {'A','D','O','P','Q','R'};
-	char c;
-	int sum,n;
-	
-	cin>>n;
-	while(n--)
-		{	c=g();
-			sum = 0;
-			while(c!='\n')
-				{  	if (c == 'b')
-						sum += 2;
-					else
-						for (int i = 0;i<=5;i++)
-							if (c==s[i])
-								sum += 1;
-					c=g();
-				}
-			cout<<sum<<endl;
-		}
-}
-```
-<hr>
-
-
-
-### 5. #include<iostream></br>
-[#include<iostream>](#include<iostream>)
-
-(30-Jan-2016)
-
-
-
-```cpp
 #include<stdio.h>
 using namespace std;
 
@@ -503,6 +363,150 @@ int main()
 	}
 
 
+}
+```
+<hr>
+
+
+
+### 3. LECANDY</br>
+[https://www.codechef.com/problems/LECANDY](https://www.codechef.com/problems/LECANDY)
+
+(31-Jan-2016)
+
+
+
+```cpp
+// See if we can make all elephants happy
+
+#include<iostream>
+
+using namespace std;
+
+int main() {
+    int tries, n, temp;
+    long int total_candies;
+
+    scanf("%d", &tries);
+
+    while (tries--) {
+        cin>>n;
+        cin>>total_candies;
+
+        while (n--) {
+            cin>>temp;
+            total_candies -= temp;
+        }
+
+        if (total_candies >= 0)
+            cout<<"Yes"<<endl;
+        else
+            cout<<"No"<<endl;
+    }
+return 0;
+}
+```
+<hr>
+
+
+
+### 4. PRPALIN</br>
+[https://www.codechef.com/problems/PRPALIN](https://www.codechef.com/problems/PRPALIN)
+
+(30-Jan-2016)
+
+
+
+```cpp
+// Find the first prime palindromic number after the given number
+#include <stdio.h>
+#include <math.h>
+
+bool is_palindrome(long int &n) {
+    long int a = n;
+    long int b = 0;
+
+    // We don't know the n_digits of n, hence we can't check the r/l half alone
+    while (a > 0) {
+        b *= 10;
+        b += a % 10;
+        a /= 10;
+    }
+
+    return b == n;
+}
+
+bool is_prime(long int &n) {
+    long int max_factor = sqrt(n);
+
+    if (!(n % 3) or !(n % 5) or !(n % 7))
+        return false;
+
+    for (long int f = 11; f < max_factor; f += 2)
+        if (!(n % f))
+            return false;
+
+    return true;
+}
+
+int main() {
+    // Global array to store all the prime numbers
+    long int n;
+
+    scanf("%li", &n);
+
+    // If even, advance by one so we can skip all even numbers
+    if(n % 2 == 0)
+        n += 1;
+
+    for(;; n+=2)
+        if (is_palindrome(n) and is_prime(n)) {
+            printf("%li\n", n);
+            break;
+        }
+}
+```
+<hr>
+
+
+
+### 5. HOLES</br>
+[https://www.codechef.com/problems/HOLES](https://www.codechef.com/problems/HOLES)
+
+(30-Jan-2016)
+
+
+
+```cpp
+// Compute the number of holes (fully bounded regions) of all the
+// characters in the string
+
+#include<iostream>
+#include<stdio.h>
+#define g getchar_unlocked
+
+using namespace std;
+int main()
+{
+	char s[] = {'A','D','O','P','Q','R'};
+	char c;
+	int sum,n;
+	
+	cin>>n;
+	while(n--)
+		{	c=g();
+			sum = 0;
+			while(c!='\n')
+				{  	if (c == 'b')
+						sum += 2;
+					else
+						for (int i = 0;i<=5;i++)
+							if (c==s[i])
+								sum += 1;
+					c=g();
+				}
+			cout<<sum<<endl;
+		}
 }
 ```
 <hr>
